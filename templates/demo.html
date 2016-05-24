@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ACE in Action</title>
+<style type="text/css" media="screen">
+    #editor {
+        position: absolute;
+        top: 50px;
+        right: 55%;
+        bottom: 50px;
+        left: 50px;
+    }
+    #editor2 {
+        position: absolute;
+        top:  50px;
+        right: 50px;
+        bottom: 50px;
+        left: 55%;
+    }
+</style>
+</head>
+<body>
+
+<div id="editor">{{ text }}
+</div>
+
+<div id="editor2">{{ report }}
+</div>
+
+<!-- 载入文件 -->
+
+{% load staticfiles %}
+<script src="{% static "ace-builds/src-noconflict/ace.js" %}" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/php");
+
+    var editor2 = ace.edit("editor2");
+    editor2.setTheme("ace/theme/monokai");
+    editor2.getSession().setMode("ace/mode/html");
+    var selec = editor.getSession().selection;
+    var session2 = editor2.getSession();
+    display();
+    function display() {
+        document.getElementById("editor").onmousedown = function (event) {
+            var rownum = selec.getCursor().row;
+        var colnum = selec.getCursor().column;
+        <!--alert(rownum);-->
+        editor2.gotoLine(rownum);
+        }
+    }
+</script>
+<input id="demo" >
+<button type="button" onclick="display()">TEST</button>
+</body>
+</html>
